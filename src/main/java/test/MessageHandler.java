@@ -21,7 +21,26 @@ public class MessageHandler {
         this.text = text;
     }
 
+    enum graph_types{
+        jpg, png, jpeg, bmp, bpg
+    }
+
+    private void checkFileName() throws Exception{
+        boolean check = false;
+        String[] array = text.split(".");
+        String raz = array[array.length-1];
+        for(graph_types t: graph_types.values()){
+            if (raz.equals(t.toString()))
+                check = true;
+            System.out.println(t.toString());
+        }
+        if (check == false)
+            throw new Exception();
+    }
+
     private static byte[] readFileToByteArray(File file) throws Exception{
+
+
         FileInputStream fis = null;
 
         byte[] bArray = new byte[(int) file.length()];
@@ -33,6 +52,7 @@ public class MessageHandler {
 
     public void handle(){
         try {
+            //checkFileName();
             File file = new File(this.text);
             byte[] bArray = readFileToByteArray(file);
             sendMessage(bArray);
